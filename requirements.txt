@@ -1,0 +1,12 @@
+Django==6.0.6
+Pillow==12.3.0
+PyMySQL==1.2.0
+asgiref==3.12.1
+crispy-bootstrap5==2026.3
+django-allauth==65.18.0
+django-crispy-forms==2.7
+django-jalali-date==2.0.0
+django-jazzmin==3.0.5
+jalali_core==1.0.0
+jdatetime==6.0.1
+sqlparse==0.5.5

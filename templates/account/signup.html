@@ -1,0 +1,61 @@
+{% extends "_base.html" %}
+{% load i18n %}
+{% load allauth account %}
+
+{% block title %}ثبت‌نام | فروشگاه امیری{% endblock title %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <span class="auth-icon">
+            <i class="bi bi-person-plus"></i>
+        </span>
+
+        <h1 class="auth-title">ایجاد حساب کاربری</h1>
+
+        <p class="auth-subtitle">
+            برای استفاده از امکانات فروشگاه ثبت‌نام کنید.
+        </p>
+
+        {% if not SOCIALACCOUNT_ONLY %}
+            {% url 'account_signup' as action_url %}
+
+            <form method="post" action="{{ action_url }}" class="auth-form">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field }}
+                {% endfor %}
+
+                {% for field in form.visible_fields %}
+                    <p>
+                        {{ field.label_tag }}
+                        {{ field }}
+
+                        {% if field.help_text %}
+                            <span class="helptext">
+                                {{ field.help_text }}
+                            </span>
+                        {% endif %}
+
+                        {{ field.errors }}
+                    </p>
+                {% endfor %}
+
+                {{ redirect_field }}
+
+                <button type="submit" class="btn btn-brand auth-submit">
+                    ثبت‌نام
+                </button>
+            </form>
+        {% endif %}
+
+        <p class="auth-footer">
+            قبلاً حساب کاربری ساخته‌اید؟
+            <a href="{% url 'account_login' %}">وارد شوید</a>
+        </p>
+    </div>
+</section>
+{% endblock content %}

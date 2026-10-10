@@ -1,0 +1,42 @@
+{% extends "_base.html" %}
+
+{% block title %}ورود | فروشگاه امیری{% endblock title %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <span class="auth-icon"><i class="bi bi-person"></i></span>
+        <h1 class="auth-title">خوش آمدید</h1>
+        <p class="auth-subtitle">برای ادامه، وارد حساب کاربری خود شوید.</p>
+
+        <form method="post" action="{% url 'account_login' %}" class="auth-form">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                <p>
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+                    {{ field.errors }}
+                </p>
+            {% endfor %}
+
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+
+            <button type="submit" class="btn btn-brand auth-submit">ورود</button>
+        </form>
+
+        <p class="auth-footer">
+            حساب کاربری ندارید؟
+            <a href="{% url 'account_signup' %}">ثبت‌نام کنید</a>
+        </p>
+    </div>
+</section>
+{% endblock content %}

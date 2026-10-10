@@ -1,0 +1,25 @@
+{% extends "_base.html" %}
+
+{% block title %}خروج | فروشگاه امیری{% endblock title %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card text-center">
+        <span class="auth-icon"><i class="bi bi-box-arrow-left"></i></span>
+        <h1 class="auth-title">خروج از حساب</h1>
+        <p class="auth-subtitle">آیا مطمئن هستید که می‌خواهید از حساب کاربری خود خارج شوید؟</p>
+
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+            {% endif %}
+            <button type="submit" class="btn btn-brand auth-submit">بله، خارج می‌شوم</button>
+        </form>
+
+        <p class="auth-footer">
+            <a href="{% url 'home' %}">بازگشت به فروشگاه</a>
+        </p>
+    </div>
+</section>
+{% endblock content %}

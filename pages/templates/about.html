@@ -1,0 +1,181 @@
+{% extends '_base.html' %}
+
+{% block title %}
+درباره ما | فروشگاه دیجیتال
+{% endblock title %}
+
+{% block content %}
+
+<style>
+    .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .product-card {
+        transition: all 0.3s ease;
+        border-radius: 20px;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2) !important;
+    }
+
+    .emoji-icon {
+        font-size: 3.5rem;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .emoji-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .feature-item {
+        padding: 12px 0;
+        transition: all 0.2s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateX(8px);
+        color: #667eea !important;
+    }
+
+    .cta-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 14px 40px;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .mission-box {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 25px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+
+    <section class="text-center mb-5 pb-4">
+        <h1 class="fw-bold mb-4 gradient-text" style="font-size: 3rem;">درباره ما</h1>
+        <p class="text-muted mx-auto" style="max-width: 750px; line-height: 2; font-size: 1.15rem;">
+            چند سالی هست که مشغول فروش انواع موبایل، لپ‌تاپ و دوربین هستیم.
+            سعی می‌کنیم چیزایی که خودمون ازش راضی‌ایم رو با قیمت خوب
+            به دست شما برسونیم.
+        </p>
+    </section>
+
+    <!-- بخش محصولات -->
+    <div class="row g-4 mb-5">
+
+        <div class="col-md-4">
+            <div class="card product-card h-100 border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <div class="emoji-icon mb-3">📱</div>
+                    <h4 class="fw-bold mb-3" style="color: #667eea;">موبایل</h4>
+                    <p class="text-muted mt-3" style="line-height: 1.8;">
+                        گوشی‌های مختلف از برندهای معتبر - از رده اقتصادی تا پرچمدار.
+                        لوازم جانبی هم داریم.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card product-card h-100 border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <div class="emoji-icon mb-3">💻</div>
+                    <h4 class="fw-bold mb-3" style="color: #667eea;">لپ‌تاپ</h4>
+                    <p class="text-muted mt-3" style="line-height: 1.8;">
+                        لپ‌تاپ برای کار اداری، دانشجویی، طراحی و گیمینگ.
+                        هر بودجه‌ای که دارید یه چیزی پیدا می‌کنیم.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card product-card h-100 border-0 shadow-sm text-center p-4">
+                <div class="card-body">
+                    <div class="emoji-icon mb-3">📷</div>
+                    <h4 class="fw-bold mb-3" style="color: #667eea;">دوربین</h4>
+                    <p class="text-muted mt-3" style="line-height: 1.8;">
+                        دوربین‌های عکاسی و فیلمبرداری با لوازم جانبی
+                        برای کسایی که عاشق ثبت لحظه‌ان.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <section class="rounded-4 p-5 mb-5" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);">
+        <div class="row align-items-center">
+
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h2 class="fw-bold mb-4 gradient-text">چرا از اینجا بخرید؟</h2>
+
+                <div class="mt-4">
+                    <div class="feature-item">
+                        <span style="color: #667eea; font-size: 1.2rem;">✓</span>
+                        <span class="ms-2">همه چی اصله، گارانتی معتبر</span>
+                    </div>
+                    <div class="feature-item">
+                        <span style="color: #667eea; font-size: 1.2rem;">✓</span>
+                        <span class="ms-2">قیمت‌ها رو با بازار چک کنید</span>
+                    </div>
+                    <div class="feature-item">
+                        <span style="color: #667eea; font-size: 1.2rem;">✓</span>
+                        <span class="ms-2">ارسال سریع به سراسر ایران</span>
+                    </div>
+                    <div class="feature-item">
+                        <span style="color: #667eea; font-size: 1.2rem;">✓</span>
+                        <span class="ms-2">قبل خرید با ما مشورت کنید</span>
+                    </div>
+                    <div class="feature-item">
+                        <span style="color: #667eea; font-size: 1.2rem;">✓</span>
+                        <span class="ms-2">رضایت شما برامون مهمه</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mission-box p-5 text-center">
+                    <h3 class="fw-bold mb-4" style="color: #667eea;">🎯 هدف ما چیه؟</h3>
+                    <p class="mb-0" style="line-height: 2; color: #555; font-size: 1.05rem;">
+                        دوست داریم خرید محصولات دیجیتال براتون راحت و بدون دردسر باشه.
+                        یه جایی که بتونید با خیال راحت سفارش بدید.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="text-center py-5">
+        <h2 class="fw-bold mb-4" style="font-size: 2.2rem;">بیاید یه سری بزنید 🛍️</h2>
+
+        <p class="text-muted mb-5" style="font-size: 1.1rem;">
+            اگه نمی‌دونید چی بخرید یا سردرگمید، بهمون پیام بدید کمکتون می‌کنیم.
+        </p>
+
+        <a href="{% url 'products:product-list' %}" class="btn btn-primary cta-button">
+            مشاهده محصولات ✨
+        </a>
+    </section>
+
+</div>
+
+{% endblock content %}

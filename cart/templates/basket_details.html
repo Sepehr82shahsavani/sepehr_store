@@ -1,0 +1,91 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">جزییات سبد خرید</h2>
+
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">تصویر</th>
+                <th scope="col">نام محصول</th>
+                <th scope="col">قیمت واحد</th>
+                <th scope="col">تعداد</th>
+                <th scope="col">قیمت کل</th>
+                <th scope="col">عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in cart %}
+                <tr>
+                    <td>
+                        {% if item.product_obj.image_small %}
+                            <img src="{{ item.product_obj.image_small.url }}" alt="{{ item.product_obj.title }}"
+                                 style="width: 50px; height: 50px; object-fit: cover;">
+                        {% else %}
+                            <span>بدون عکس</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ item.product_obj.title }}</td>
+                    <td>{{ item.product_obj.price }} تومان</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <form action="{% url 'cart:basket_decrease' item.product_obj.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                    −
+                                </button>
+                            </form>
+
+                            <span>{{ item.quantity }}</span>
+
+                            <form action="{% url 'cart:basket_increase' item.product_obj.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                                    +
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+
+                    <td>{% widthratio item.quantity 1 item.product_obj.price %} تومان</td>
+                    <td>
+                        <form action="{% url 'cart:basket_remove' item.product_obj.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger btn-sm">حذف</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">سبد خرید شما خالی است.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% if cart %}
+            <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded border">
+                <div class="d-flex align-items-center gap-2">
+                    <form action="{% url 'cart:basket_clear' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">
+                            خالی کردن سبد خرید
+                        </button>
+                    </form>
+
+                    <a href="{% url 'orders:order_create' %}">ادامه ثبت سفارش</a>
+
+                </div>
+
+                <div>
+                    <span class="fs-5 fw-bold">جمع کل سبد خرید: </span>
+                    <span class="fs-5 text-success fw-bold">
+                        {{ cart.get_total_price }} تومان
+                    </span>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock content %}

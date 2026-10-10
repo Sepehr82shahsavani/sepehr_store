@@ -1,0 +1,153 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}{{ product.title }}{% endblock title %}
+{% block content %}
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="style">
+                    <div class="product-main-image">
+                        <img id="main-product-image" src="{{ product.image_big.url }}" alt="{{ product.title }}">
+                    </div>
+                    <div class="product-thumbnails">
+                        <button type="button" class="product-thumbnail active" data-image="{{ product.image_big.url }}">
+                            <img src="{{ product.image_big.url }}" alt="عکس اول {{ product.title }}">
+                        </button>
+                        {% if product.image_small %}
+                            <button type="button" class="product-thumbnail" data-image="{{ product.image_small.url }}">
+                                <img src="{{ product.image_small.url }}" alt="عکس دوم {{ product.title }}">
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h1 class="h4 fw-bold mb-3">{{ product.title }}</h1>
+                <p class="text-muted">{{ product.description|linebreaksbr }}</p>
+                <div class="d-flex align-items-center gap-3 my-3">
+                    <span class="fs-4 fw-semibold">{{ product.price }} تومان</span>
+                </div>
+                {% if product.category == 'phone' %}
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">مشخصات گوشی موبایل</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle mb-0">
+                                    <tbody>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">اندازه صفحه نمایش</th>
+                                        <td>{{ product.phone_spec.screen_size }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">رزولوشن دوربین</th>
+                                        <td>{{ product.phone_spec.camera_resolution }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">ظرفیت باتری</th>
+                                        <td>{{ product.phone_spec.battery_capacity }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">حافظه داخلی</th>
+                                        <td>{{ product.phone_spec.storage }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% elif product.category == 'laptop' %}
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">مشخصات لپ‌تاپ</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle mb-0">
+                                    <tbody>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">پردازنده</th>
+                                        <td>{{ product.laptop_spec.cpu }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">حافظه رم</th>
+                                        <td>{{ product.laptop_spec.ram }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">کارت گرافیک</th>
+                                        <td>{{ product.laptop_spec.gpu }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">حافظه داخلی</th>
+                                        <td>{{ product.laptop_spec.storage }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% elif product.category == 'camera' %}
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">مشخصات دوربین</h5>
+                            <div class="table-responsive">
+                                <table class="table table-bordered align-middle mb-0">
+                                    <tbody>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">نوع حسگر</th>
+                                        <td>{{ product.camera_spec.sensor_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">رزولوشن</th>
+                                        <td>{{ product.camera_spec.resolution }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">لنز</th>
+                                        <td>{{ product.camera_spec.lens_mount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="bg-light w-50" scope="row">کیفیت فیلم‌برداری</th>
+                                        <td>{{ product.camera_spec.video_resolution }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <form method="post" action="{% url 'cart:basket_add' product.id %}"
+                      class="d-flex gap-2 align-items-center mb-4">
+                    {% csrf_token %}
+                    <div class="input-group input-group-sm mb-3">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="button-decrement">-</button>
+                        <input type="number" class="form-control text-center" id="quantity-input" value="1" min="1"
+                               max="10" name="quantity">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" id="button-increment">+</button>
+                    </div>
+                    <button class="btn btn-primary" type="submit">افزودن به سبد</button>
+                </form>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">نظرات کاربران</h5>
+                        {% for c in product.comments.all %}
+                            {% if c.is_approved %}
+                                <div class="mb-3">
+                                    <strong>{{ c.user_name }}</strong>
+                                    <p class="mb-1">{{ c.text }}</p>
+                                    <small class="text-muted">امتیاز {{ c.rating }}/5</small>
+                                </div>
+                            {% endif %}
+                        {% empty %}
+                            <p class="text-muted mb-0">نظری ثبت نشده است.</p>
+                        {% endfor %}
+                        <hr>
+                        <form method="post" action="{% url 'products:comment_create' product.id %}">
+                            {% csrf_token %}
+                            {{ comment_form.as_p }}
+                            <button type="submit" class="btn btn-outline-primary">ثبت نظر</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/style.js' %}"></script>
+{% endblock content %}

@@ -1,0 +1,164 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    <div class="container mt-5 mb-5">
+        <h2 class="mb-4">تکمیل سفارش</h2>
+
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if items %}
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <div class="border rounded p-3 h-100">
+                        <h5 class="mb-3">محصولات سبد خرید</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                <tr>
+                                    <th scope="col">محصول</th>
+                                    <th scope="col">قیمت واحد</th>
+                                    <th scope="col">تعداد</th>
+                                    <th scope="col">جمع</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in items %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                {% if item.product_obj.image_small %}
+                                                    <img
+                                                            src="{{ item.product_obj.image_small.url }}"
+                                                            alt="{{ item.product_obj.title }}"
+                                                            class="rounded"
+                                                            style="width: 50px; height: 50px; object-fit: cover;"
+                                                    >
+                                                {% else %}
+                                                    <div
+                                                            class="bg-light border rounded d-flex align-items-center justify-content-center text-muted text-center"
+                                                            style="width: 50px; height: 50px; flex-shrink: 0; font-size: 11px;"
+                                                    >
+                                                        بدون عکس
+                                                    </div>
+                                                {% endif %}
+
+                                                <span>{{ item.product_obj.title }}</span>
+                                            </div>
+                                        </td>
+                                        <td>{{ item.product_obj.price }} تومان</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.total_price }} تومان</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center bg-light border rounded p-3 mt-3">
+                            <strong>مبلغ کل سفارش:</strong>
+                            <strong>{{ total_price }} تومان</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="border rounded p-4 bg-light">
+                        <h5 class="mb-3">اطلاعات ارسال</h5>
+
+                        <form method="post" action="{% url 'orders:order_create' %}">
+                            {% csrf_token %}
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="id_first_name" class="form-label">نام</label>
+                                    <input
+                                            type="text"
+                                            id="id_first_name"
+                                            name="first_name"
+                                            class="form-control"
+                                            value="{{ first_name|default:'' }}"
+                                            maxlength="100"
+                                            required
+                                    >
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="id_last_name" class="form-label">نام خانوادگی</label>
+                                    <input
+                                            type="text"
+                                            id="id_last_name"
+                                            name="last_name"
+                                            class="form-control"
+                                            value="{{ last_name|default:'' }}"
+                                            maxlength="100"
+                                            required
+                                    >
+                                </div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="id_mobile" class="form-label">شماره موبایل</label>
+                                <input
+                                        type="tel"
+                                        id="id_mobile"
+                                        name="mobile"
+                                        class="form-control"
+                                        value="{{ mobile|default:'' }}"
+                                        placeholder="مثلاً 09123456789"
+                                        required
+                                >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_address" class="form-label">نشانی</label>
+                                <textarea
+                                        id="id_address"
+                                        name="address"
+                                        class="form-control"
+                                        rows="4"
+                                        required
+                                >{{ address|default:'' }}</textarea>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="id_postal_code" class="form-label">کد پستی</label>
+                                <input
+                                        type="text"
+                                        id="id_postal_code"
+                                        name="postal_code"
+                                        class="form-control"
+                                        value="{{ postal_code|default:'' }}"
+                                        maxlength="10"
+                                        inputmode="numeric"
+                                        required
+                                >
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success">
+                                    ثبت نهایی سفارش
+                                </button>
+                                <a href="{% url 'cart:basket_detail' %}" class="btn btn-outline-secondary">
+                                    بازگشت به سبد خرید
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="bg-light border rounded p-4 text-center">
+                <p class="mb-3">محصولی برای ثبت سفارش در سبد خرید نیست.</p>
+                <a href="{% url 'cart:basket_detail' %}" class="btn btn-outline-secondary">
+                    بازگشت به سبد خرید
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

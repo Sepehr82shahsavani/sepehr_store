@@ -1,0 +1,81 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4">ثبت سفارش</h2>
+
+    <div class="border rounded bg-light p-4">
+        <div class="text-center mb-4">
+            <h4 class="text-success fw-bold mb-3">
+                سفارش شما با موفقیت ثبت شد
+            </h4>
+
+            <p class="mb-0">
+                از خرید شما سپاسگزاریم.
+            </p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <tbody>
+                    <tr>
+                        <th scope="row" class="table-light">شماره سفارش</th>
+                        <td>{{ order.id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="table-light">مبلغ سفارش</th>
+                        <td class="text-success fw-bold">
+                            {{ order.total_price }} تومان
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="table-light">نشانی ارسال</th>
+                        <td>{{ order.address }}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="table-light">کد پستی</th>
+                        <td>{{ order.postal_code }}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row" class="table-light">وضعیت پرداخت</th>
+                        <td>
+                            {% if order.is_paid %}
+                                <span class="text-success fw-bold">
+                                    پرداخت شده
+                                </span>
+                            {% else %}
+                                <span class="text-warning fw-bold">
+                                    در انتظار پرداخت
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+            <span class="fw-bold">
+                مبلغ کل:
+            </span>
+
+            <span class="fs-5 text-success fw-bold">
+                {{ order.total_price }} تومان
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mt-4">
+            <a
+                href="{% url 'home' %}"
+                class="btn btn-success"
+            >
+                ثبت سفارش جدید
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
